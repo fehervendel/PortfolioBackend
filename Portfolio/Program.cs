@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Context;
+using Portfolio.Controllers;
 using Portfolio.Models;
 using Portfolio.Repositories;
 
@@ -13,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PortfolioContext>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
+builder.Services.AddScoped<IContentRepository, ContentRepository>();
 
 var app = builder.Build();
 
