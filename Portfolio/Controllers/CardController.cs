@@ -8,12 +8,12 @@ namespace Portfolio.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class PortfolioController : ControllerBase
+public class CardController : ControllerBase
 {
     private readonly ICardRepository _cardRepository;
-    private readonly ILogger<PortfolioController> _logger;
+    private readonly ILogger<CardController> _logger;
 
-    public PortfolioController(ICardRepository cardRepository, ILogger<PortfolioController> logger)
+    public CardController(ICardRepository cardRepository, ILogger<CardController> logger)
     {
         _cardRepository = cardRepository;
         _logger = logger;
