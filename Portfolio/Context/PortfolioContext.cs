@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Models;
 
 namespace Portfolio.Context;
@@ -10,7 +11,8 @@ public class PortfolioContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        Env.Load();
         optionsBuilder.UseSqlServer(
-            "Server=localhost,1434;Database=Portfolio;User Id=sa;Password=YourStrong!Passw0rd;");
+            Environment.GetEnvironmentVariable("DB_CONNECTION_STRING"));
     }
 }
