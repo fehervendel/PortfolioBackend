@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PortfolioContext>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<IContentRepository, ContentRepository>();
+builder.Services.AddScoped<IEmailRepository, EmailRepository>();
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 app.UseCors(policy => policy
@@ -35,20 +37,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-void SendTestEmail()
-{
-    string userEmail = "fehervendel@gmail.com";
-    string userName = "Fehér Vendel";
-
-    EmailService emailService = new EmailService();
-    emailService.SendEmails(userEmail, userName);
-}
-
-/*
-SendTestEmail(); works
-*/
-
 
 app.Run();
