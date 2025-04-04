@@ -8,6 +8,7 @@ public class PortfolioContext : DbContext
 {
     public DbSet<Card> Cards { get; set; }
     public DbSet<Content> Content { get; set; }
+    public DbSet<Email> Emails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
