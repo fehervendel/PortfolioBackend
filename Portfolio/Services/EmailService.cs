@@ -7,7 +7,7 @@ namespace Portfolio.Services;
 
 public class EmailService
 {
-    public void SendEmails(string userEmail, string userName)
+    public void SendEmails(string userEmail, string userName, string phoneNumber, string message)
     {
         Env.Load();
         var userMessage = new MimeMessage();
@@ -17,8 +17,22 @@ public class EmailService
 
         var userBodyBuilder = new BodyBuilder
         {
-            HtmlBody = "<h1>Thank you for your submission!</h1><p>I will contact you soon.</p>",
-            TextBody = "Thank you for your submission! I will contact you soon."
+            HtmlBody = $@"
+            <div style='font-family: Arial, sans-serif; color: #333;'>
+                <h2>Thank you for your submission, {userName}!</h2>
+                <p>I will contact you soon.</p>
+                <hr>
+                <p><strong>Name:</strong> {userName}</p>
+                <p><strong>Email:</strong> {userEmail}</p>
+                <p><strong>Phone:</strong> {phoneNumber}</p>
+                <p><strong>Message:</strong></p>
+                <blockquote style='padding-left: 10px; color: #555;'>
+                    {message}
+                </blockquote>
+                <hr>
+                <p style='font-size: 14px; color: #666;'>This is an automated response. Please do not reply.</p>
+            </div>",
+            TextBody = $"Thank you for your submission, {userName}! I will contact you soon."
         };
         userMessage.Body = userBodyBuilder.ToMessageBody();
 
@@ -31,8 +45,28 @@ public class EmailService
 
         var adminBodyBuilder = new BodyBuilder
         {
-            HtmlBody = $"<h1>New contact!</h1><p>You've received a new contact from {userName}</p>",
-            TextBody = $"You've received a new contact from {userName}"
+            HtmlBody = $@"
+            <div style='font-family: Arial, sans-serif; color: #333;'>
+                <h2 style='color: #c2d834;'>New Contact Received!</h2>
+                <p><strong>Name:</strong> {userName}</p>
+                <p><strong>Email:</strong> {userEmail}</p>
+                <p><strong>Phone:</strong> {phoneNumber}</p>
+                <p><strong>Message:</strong></p>
+                <blockquote style='padding-left: 10px; color: #555;'>
+                    {message}
+                </blockquote>
+                <hr>
+                <p style='font-size: 14px; color: #666;'>This is an automated notification.</p>
+            </div>",
+            TextBody = $@"
+            New Contact Received!
+
+            Name: {userName}
+            Email: {userEmail}
+            Phone: {phoneNumber}
+
+            Message:
+            {message}"
         };
         adminMessage.Body = adminBodyBuilder.ToMessageBody();
 
