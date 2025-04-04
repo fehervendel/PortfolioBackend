@@ -6,45 +6,46 @@ namespace Portfolio.Repositories;
 
 public class ContentRepository : IContentRepository
 {
+
+    private readonly PortfolioContext _dbContext;
+
+    public ContentRepository(PortfolioContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
     public async Task<IEnumerable<Content>> GetContent()
     {
-        using var dbContext = new PortfolioContext();
-        return await dbContext.Content.ToListAsync();
+        return await _dbContext.Content.ToListAsync();
     }
 
     public async Task<Content> GetById(int id)
     {
-        using var dbContext = new PortfolioContext();
-        return await dbContext.Content.FirstAsync(c => c.Id == id);
+        return await _dbContext.Content.FirstAsync(c => c.Id == id);
     }
 
     public async Task Add(Content content)
     {
-        using var dbContext = new PortfolioContext();
-        dbContext.Add(content);
-        await dbContext.SaveChangesAsync();
+        _dbContext.Add(content);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task EditContent(int id, string textContent, string sectionId, int order)
     {
-        using var dbContext = new PortfolioContext();
-
-        Content contentToEdit = await dbContext.Content.FirstAsync(c => c.Id == id);
+        Content contentToEdit = await _dbContext.Content.FirstAsync(c => c.Id == id);
 
         contentToEdit.TextContent = textContent;
         contentToEdit.SectionId = sectionId;
         contentToEdit.Order = order;
 
-        dbContext.Update(contentToEdit);
-        await dbContext.SaveChangesAsync();
+        _dbContext.Update(contentToEdit);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteById(int id)
     {
-        using var dbContext = new PortfolioContext();
-        Content contentToDelete = await dbContext.Content.FirstAsync(c => c.Id == id);
+        Content contentToDelete = await _dbContext.Content.FirstAsync(c => c.Id == id);
 
-        dbContext.Remove(contentToDelete);
-        await dbContext.SaveChangesAsync();
+        _dbContext.Remove(contentToDelete);
+        await _dbContext.SaveChangesAsync();
     }
 }

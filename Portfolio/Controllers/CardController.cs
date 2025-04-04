@@ -22,15 +22,30 @@ public class CardController : ControllerBase
     [HttpGet("GetCards")]
     public async Task<ActionResult<Card>> GetCards()
     {
-        var cards = await _cardRepository.GetCards();
         try
         {
+            var cards = await _cardRepository.GetCards();
             return Ok(cards);
         }
         catch (Exception e)
         {
             _logger.LogError(e,"Error getting cards");
             return NotFound("Error getting cards");
+        }
+    }
+
+    [HttpGet("GetCardById")]
+    public async Task<ActionResult<Card>> GetCardById(int id)
+    {
+        try
+        {
+            var card = await _cardRepository.GetById(id);
+            return Ok(card);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting card");
+            return NotFound("Error getting card");
         }
     }
 

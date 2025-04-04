@@ -21,14 +21,29 @@ public class ContentController : ControllerBase
     [HttpGet("GetContent")]
     public async Task<ActionResult<Content>> GetContent()
     {
-        var content = await _contentRepository.GetContent();
         try
         {
+            var content = await _contentRepository.GetContent();
             return Ok(content);
         }
         catch (Exception e)
         {
             _logger.LogError(e,"Error getting content");
+            return NotFound("Error getting content");
+        }
+    }
+
+    [HttpGet("GetContentById")]
+    public async Task<ActionResult<Card>> GetContentById(int id)
+    {
+        try
+        {
+            var content = await _contentRepository.GetById(id);
+            return Ok(content);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting content");
             return NotFound("Error getting content");
         }
     }

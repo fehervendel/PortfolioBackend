@@ -6,46 +6,47 @@ namespace Portfolio.Repositories;
 
 public class CardRepository : ICardRepository
 {
+
+    private readonly PortfolioContext _dbContext;
+
+    public CardRepository(PortfolioContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
     public async Task<IEnumerable<Card>> GetCards()
     {
-        using var dbContext = new PortfolioContext();
-        return await dbContext.Cards.ToListAsync();
+        return await _dbContext.Cards.ToListAsync();
     }
 
     public async Task<Card> GetById(int id)
     {
-        using var dbContext = new PortfolioContext();
-        return await dbContext.Cards.FirstAsync(c => c.Id == id);
+        return await _dbContext.Cards.FirstAsync(c => c.Id == id);
     }
 
     public async Task Add(Card card)
     {
-        using var dbContext = new PortfolioContext();
-        dbContext.Add(card);
-        await dbContext.SaveChangesAsync();
+        _dbContext.Add(card);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task EditCard(int id, string title, string description, string color, int order)
     {
-        using var dbContext = new PortfolioContext();
-
-        Card cardToEdit = await dbContext.Cards.FirstAsync(c => c.Id == id);
+        Card cardToEdit = await _dbContext.Cards.FirstAsync(c => c.Id == id);
 
         cardToEdit.Title = title;
         cardToEdit.Description = description;
         cardToEdit.Color = color;
         cardToEdit.Order = order;
 
-        dbContext.Update(cardToEdit);
-        await dbContext.SaveChangesAsync();
+        _dbContext.Update(cardToEdit);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteById(int id)
     {
-        using var dbContext = new PortfolioContext();
-        Card cardToDelete = await dbContext.Cards.FirstAsync(c => c.Id == id);
+        Card cardToDelete = await _dbContext.Cards.FirstAsync(c => c.Id == id);
 
-        dbContext.Remove(cardToDelete);
-        await dbContext.SaveChangesAsync();
+        _dbContext.Remove(cardToDelete);
+        await _dbContext.SaveChangesAsync();
     }
 }
