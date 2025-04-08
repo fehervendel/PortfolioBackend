@@ -5,6 +5,7 @@ using Portfolio.Controllers;
 using Portfolio.Models;
 using Portfolio.Repositories;
 using Portfolio.Services;
+using OtpNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+void GoogleAuthKeyGenerate()
+{
+    var key = KeyGeneration.GenerateRandomKey(20);
+    var secret = Base32Encoding.ToString(key);
+    Console.WriteLine("Google Authenticator secret:");
+    Console.WriteLine(secret);
+}
+
+/*GoogleAuthKeyGenerate();*/  /*<---- Uncomment, run once, and copy the key to .env*/
 
 app.UseHttpsRedirection();
 
