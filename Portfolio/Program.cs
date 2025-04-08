@@ -19,6 +19,7 @@ builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<IContentRepository, ContentRepository>();
 builder.Services.AddScoped<IEmailRepository, EmailRepository>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<AuthService>();
 
 var app = builder.Build();
 app.UseCors(policy => policy
