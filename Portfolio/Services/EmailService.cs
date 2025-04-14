@@ -15,6 +15,7 @@ public class EmailService
         userMessage.To.Add(new MailboxAddress(userName, userEmail));
         userMessage.Subject = "Thank you for contacting me!";
 
+        var formattedMessage = message.Replace("\n", "<br>").Replace("\r", "");
         var userBodyBuilder = new BodyBuilder
         {
             HtmlBody = $@"
@@ -27,7 +28,7 @@ public class EmailService
                 <p><strong>Phone:</strong> {phoneNumber}</p>
                 <p><strong>Message:</strong></p>
                 <blockquote style='padding-left: 10px; color: #555;'>
-                    {message}
+                    {formattedMessage}
                 </blockquote>
                 <hr>
                 <p style='font-size: 14px; color: #666;'>This is an automated response. Please do not reply.</p>
@@ -53,7 +54,7 @@ public class EmailService
                 <p><strong>Phone:</strong> {phoneNumber}</p>
                 <p><strong>Message:</strong></p>
                 <blockquote style='padding-left: 10px; color: #555;'>
-                    {message}
+                    {formattedMessage}
                 </blockquote>
                 <hr>
                 <p style='font-size: 14px; color: #666;'>This is an automated notification.</p>
