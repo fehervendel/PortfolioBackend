@@ -20,7 +20,7 @@ namespace Portfolio.Services
                 Subject = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name, "admin")
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(4),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
