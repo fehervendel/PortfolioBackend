@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Portfolio.Controllers;
 
@@ -19,6 +20,7 @@ public class ResumeController : ControllerBase
         return File(fileBytes, "application/pdf", "Vendel-Feher-resume.pdf");
     }
 
+    [Authorize]
     [HttpPost("ChangeResume")]
     public async Task<IActionResult> ChangeResume([FromForm] IFormFile file)
     {

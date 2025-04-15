@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 using Portfolio.Models.DTOs;
@@ -49,6 +50,7 @@ public class CardController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPost("AddCard")]
     public async Task<ActionResult> AddCard([FromBody] AddCard card)
     {
@@ -73,6 +75,7 @@ public class CardController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPut("EditCard")]
     public async Task<IActionResult> EditCard([FromBody] EditCard editCard)
     {
@@ -91,6 +94,7 @@ public class CardController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpDelete("DeleteCardById")]
     public async Task<IActionResult> DeleteById(int id)
     {

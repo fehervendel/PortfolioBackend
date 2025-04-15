@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 using Portfolio.Models.DTOs;
 using Portfolio.Repositories;
@@ -48,6 +49,7 @@ public class ContentController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPost("AddContent")]
     public async Task<ActionResult> AddContent([FromBody] AddContent content)
     {
@@ -72,6 +74,7 @@ public class ContentController : ControllerBase
     }
 
 
+    [Authorize]
     [HttpPut("EditContent")]
     public async Task<IActionResult> EditContent([FromBody] EditContent editContent)
     {
@@ -89,6 +92,7 @@ public class ContentController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpDelete("DeleteContentById")]
     public async Task<IActionResult> DeleteById(int id)
     {
